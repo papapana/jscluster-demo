@@ -111,7 +111,6 @@ function compare_src(src1, src2, names) {
         // Respect the order
         var first_file = filename[0],
             second_file = filename[1];
-        // TODO: When enabling the below, duplicates are not removed!
         if (mydiff.difference[diff_str] === 2) {
             first_file = filename[1];
             second_file = filename[0];
