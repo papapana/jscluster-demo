@@ -94,8 +94,7 @@ function compare_src(src1, src2, names) {
         diff = Object.keys(mydiff.difference),
         cluster_name,
         filename,
-        diff_str,
-        temp;
+        diff_str;
     if (diff.length < 1) {
         return mydiff;
     }
@@ -113,10 +112,10 @@ function compare_src(src1, src2, names) {
         var first_file = filename[0],
             second_file = filename[1];
         // TODO: When enabling the below, duplicates are not removed!
-         if (mydiff.difference[diff_str] === 2) {
-             first_file = filename[1];
-             second_file = filename[0];
-         }
+        if (mydiff.difference[diff_str] === 2) {
+            first_file = filename[1];
+            second_file = filename[0];
+        }
         if (CLUSTER.data.hasOwnProperty(cluster_name[0])) {
             if (CLUSTER.data[cluster_name[0]].find(function (x) {
                     return (x === first_file);
@@ -140,6 +139,11 @@ function compare_src(src1, src2, names) {
     return mydiff;
 }
 
+/**
+ * Reads files and returns an array of sources
+ * @param array_src an array of source filenames
+ * @returns {Array} of sources
+ */
 function read_files(array_src) {
     var file,
         src_file = [];
@@ -156,20 +160,20 @@ function read_files(array_src) {
 
 /**
  *
- * @param array_src of source files
+ * @param src_file an array of sources
  * @returns the data cluster
  */
-function compare_array_of_sources(array_src) {
+function compare_array_of_sources(src_file) {
     "use strict";
     var i,
         j,
         len,
-        filenames;
+        names;
     len = src_file.length;
     for (i = 0; i < len; i += 1) {
         for (j = i; j < len; j += 1) {
-            filenames = array_src[i].split("/").pop() + "," + array_src[j].split("/").pop();
-            compare_src(src_file[i], src_file[j], filenames);
+            names = i + "," + j;
+            compare_src(src_file[i], src_file[j], names);
         }
     }
     return CLUSTER.data;
@@ -180,6 +184,7 @@ module.exports = {
     compare: compare,
     compare_src: compare_src,
     compare_array_of_sources: compare_array_of_sources,
+    read_files: read_files,
     cluster_data: CLUSTER.data
 };
 

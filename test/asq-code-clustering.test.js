@@ -15,6 +15,7 @@ var asqCodeClustering = require("../asq-code-clustering.js");
 var compare = asqCodeClustering.compare;
 var compare_src = asqCodeClustering.compare_src;
 var compare_array_of_sources = asqCodeClustering.compare_array_of_sources;
+var read_files = asqCodeClustering.read_files;
 
 describe("compare", function () {
     "use strict";
@@ -24,9 +25,9 @@ describe("compare", function () {
     before(function () {
         "use strict";
         try {
-            json_data1 = JSON.parse(fs.readFileSync('fixtures/code1.json', 'utf8'));
-            json_data2 = JSON.parse(fs.readFileSync('fixtures/code2.json', 'utf8'));
-            json_data3 = JSON.parse(fs.readFileSync('fixtures/code3.json', 'utf8'));
+            json_data1 = JSON.parse(fs.readFileSync('test/fixtures/code1.json', 'utf8'));
+            json_data2 = JSON.parse(fs.readFileSync('test/fixtures/code2.json', 'utf8'));
+            json_data3 = JSON.parse(fs.readFileSync('test/fixtures/code3.json', 'utf8'));
         } catch (err) {
             process.stderr.write(err.stack);
             process.exit();
@@ -84,8 +85,8 @@ describe("compare_src", function () {
     "use strict";
     it("should compare 2 different source files", function () {
         try {
-            var file1 = fs.readFileSync('fixtures/code_inspect1.js', 'utf8');
-            var file2 = fs.readFileSync('fixtures/code_inspect2.js', 'utf8');
+            var file1 = fs.readFileSync('test/fixtures/code_inspect1.js', 'utf8');
+            var file2 = fs.readFileSync('test/fixtures/code_inspect2.js', 'utf8');
             var mydiff = compare_src(file1, file2);
             expect(mydiff).to.deep.equal({levels: 10, difference: {'+=,=': 2}});
         } catch (err) {
@@ -101,7 +102,7 @@ describe("compare_array_of_sources", function () {
     it("should find the correct clusters", function () {
         // Use only javascript files
         var jsfiles = [];
-        var dir = path.resolve(__dirname, "../student_submissions")
+        var dir = path.resolve(__dirname, "fixtures/student_submissions");
         var files = fs.readdirSync(dir);
         for (var i = 0; i < files.length; i++) {
             if (path.extname(files[i]) === ".js") {
@@ -109,7 +110,8 @@ describe("compare_array_of_sources", function () {
             }
         }
 
-        var clusters = compare_array_of_sources(jsfiles);
+        var jssources = read_files(jsfiles);
+        var clusters = compare_array_of_sources(jssources);
         //console.log("clusters: " + JSON.stringify(clusters));
         expect(clusters).to.deep.equal([1, 2, 3]);
 
