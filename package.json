@@ -1,0 +1,37 @@
+{
+  "name": "jscluster",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Clustering javascript code snippets",
+  "main": "asq-code-clustering.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ASQ-USI/jscluster.git"
+  },
+  "keywords": [
+    "cluster",
+    "ast",
+    "javascript"
+  ],
+  "author": "Vassilis Papapanagiotou",
+  "license": "RPL-1.5",
+  "bugs": {
+    "url": "https://github.com/ASQ-USI/jscluster/issues"
+  },
+  "homepage": "https://github.com/ASQ-USI/jscluster#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^2.4.5",
+    "path": "^0.12.7",
+    "sinon": "^1.17.3"
+  },
+  "dependencies": {
+    "esprima": "^2.7.2"
+  }
+}
